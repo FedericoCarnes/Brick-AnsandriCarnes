@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bu2bvtme5s4to"]
+
+[ext_resource type="Script" path="res://Scripts/BrickBall/Ball.gd" id="1_7eboa"]
+[ext_resource type="Texture2D" uid="uid://dtgqq8k4iuvn4" path="res://Assets/Pelota.png" id="2_6hfh8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cnuad"]
+radius = 13.3417
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_7eboa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_cnuad")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_6hfh8")

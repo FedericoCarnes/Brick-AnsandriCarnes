@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://dx3jwrbq6yvxl"]
+
+[ext_resource type="Script" path="res://Scripts/BrickBall/ball_spawner.gd" id="1_xdc4j"]
+[ext_resource type="Script" path="res://Scripts/BrickBall/block_grid.gd" id="2_omtxl"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="BallSpawner" type="Node2D" parent="."]
+script = ExtResource("1_xdc4j")
+
+[node name="Balls" type="Node2D" parent="."]
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+size_flags_horizontal = 4
+
+[node name="ContenedorLadrillos" type="Node2D" parent="."]
+script = ExtResource("2_omtxl")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]

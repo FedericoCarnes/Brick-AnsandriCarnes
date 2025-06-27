@@ -1,0 +1,64 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdp3df0u7ajc6"]
+
+[ext_resource type="Script" path="res://Scripts/menu_principal.gd" id="1_t5wdp"]
+[ext_resource type="FontFile" uid="uid://cx8t7dylchigh" path="res://Assets/SuperMario256.ttf" id="2_n8v6o"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ke662"]
+bg_color = Color(0.236054, 0.570641, 0.59763, 1)
+
+[node name="MenuPrincipal" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_t5wdp")
+
+[node name="Container" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Container"]
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ke662")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Container/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Container/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("2_n8v6o")
+theme_override_font_sizes/font_size = 43
+text = "The Brick"
+
+[node name="BrickBall" type="Button" parent="Container/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_n8v6o")
+text = "Brick Ball"
+
+[node name="BrickBreacker" type="Button" parent="Container/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_n8v6o")
+text = "Brick Breacker"
+
+[node name="Salir" type="Button" parent="Container/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_n8v6o")
+text = "Salir"
+
+[connection signal="pressed" from="Container/Panel/VBoxContainer/BrickBall" to="." method="_on_brick_ball_pressed"]
+[connection signal="pressed" from="Container/Panel/VBoxContainer/BrickBreacker" to="." method="_on_brick_breacker_pressed"]
+[connection signal="pressed" from="Container/Panel/VBoxContainer/Salir" to="." method="_on_salir_pressed"]

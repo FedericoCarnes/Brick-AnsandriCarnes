@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwnumve5wj5rx"]
+
+[ext_resource type="Script" path="res://Scripts/BrickBreaker/paddle.gd" id="1_cppw3"]
+[ext_resource type="Texture2D" uid="uid://cdfj8btqpaotx" path="res://Assets/Paddle.png" id="1_hu7bs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cppw3"]
+size = Vector2(124, 22)
+
+[node name="Paddle" type="CharacterBody2D"]
+script = ExtResource("1_cppw3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-0.500004, 4)
+scale = Vector2(0.177489, 0.171875)
+texture = ExtResource("1_hu7bs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_cppw3")

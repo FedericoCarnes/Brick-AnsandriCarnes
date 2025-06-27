@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3 uid="uid://dx3jwrbq6yvxl"]
+
+[ext_resource type="Script" path="res://Scripts/BrickBall/brick_ball.gd" id="1_onugq"]
+[ext_resource type="Script" path="res://Scripts/BrickBall/ball_spawner.gd" id="1_xdc4j"]
+[ext_resource type="Script" path="res://Scripts/BrickBall/block_grid.gd" id="2_omtxl"]
+[ext_resource type="PackedScene" uid="uid://cdkuuil8bh6qp" path="res://Escenas/BrickBall/Pared.tscn" id="2_xb8mh"]
+[ext_resource type="PackedScene" uid="uid://bu2bvtme5s4to" path="res://Escenas/BrickBall/Ball.tscn" id="3_ddujd"]
+[ext_resource type="PackedScene" uid="uid://ckpkjrqf6b723" path="res://Escenas/BrickBall/piso.tscn" id="3_pxxom"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_onugq")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+size_flags_horizontal = 4
+
+[node name="BallSpawner" type="Node2D" parent="."]
+position = Vector2(547, 632)
+script = ExtResource("1_xdc4j")
+ball_scene = ExtResource("3_ddujd")
+
+[node name="Balls" type="Node2D" parent="."]
+position = Vector2(546, 632)
+
+[node name="paredIzq" parent="." instance=ExtResource("2_xb8mh")]
+
+[node name="paredDer" parent="." instance=ExtResource("2_xb8mh")]
+position = Vector2(263, 0)
+
+[node name="piso" parent="." instance=ExtResource("3_pxxom")]
+
+[node name="techo" parent="." instance=ExtResource("3_pxxom")]
+position = Vector2(1, 641)
+
+[node name="ContenedorLadrillos" type="Node2D" parent="."]
+position = Vector2(575, 325)
+
+[node name="Node2D" type="Node2D" parent="ContenedorLadrillos"]
+position = Vector2(-538, -216)
+
+[node name="BlockGrid" type="Node2D" parent="."]
+position = Vector2(575, 325)
+script = ExtResource("2_omtxl")
+
+[node name="Button" type="Button" parent="BlockGrid"]
+offset_left = 142.0
+offset_top = 3.0
+offset_right = 205.0
+offset_bottom = 34.0
+text = "dasdas"
+
+[connection signal="pressed" from="BlockGrid/Button" to="BlockGrid" method="_on_button_pressed"]

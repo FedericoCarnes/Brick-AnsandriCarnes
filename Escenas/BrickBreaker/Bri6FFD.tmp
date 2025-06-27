@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=3 uid="uid://dpymr2ueqsdio"]
+
+[ext_resource type="PackedScene" uid="uid://bwnumve5wj5rx" path="res://Escenas/BrickBreaker/paddle.tscn" id="1_6lbni"]
+[ext_resource type="PackedScene" uid="uid://btkens0db58k1" path="res://Escenas/BrickBreaker/pelota.tscn" id="2_vt1rs"]
+[ext_resource type="PackedScene" uid="uid://kjkpqchrno22" path="res://Escenas/BrickBreaker/pared.tscn" id="3_0kh0y"]
+[ext_resource type="PackedScene" uid="uid://b3qkcjn0inbp" path="res://Escenas/BrickBreaker/area_final.tscn" id="4_2ia52"]
+[ext_resource type="PackedScene" uid="uid://cbl30lkyw3ri4" path="res://Escenas/BrickBreaker/ui.tscn" id="5_crgrh"]
+[ext_resource type="Script" path="res://Scripts/BrickBreaker/spawner_ladrillos.gd" id="6_s2ilj"]
+[ext_resource type="PackedScene" uid="uid://bkp844ivbbvtj" path="res://Escenas/BrickBreaker/ladrillo.tscn" id="7_ktoa8"]
+
+[node name="main" type="Node"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Paddle" parent="." node_paths=PackedStringArray("camara") instance=ExtResource("1_6lbni")]
+position = Vector2(0, 283)
+collision_layer = 2
+camara = NodePath("../Camera2D")
+
+[node name="Pelota" parent="." node_paths=PackedStringArray("areaFinal", "ui") instance=ExtResource("2_vt1rs")]
+position = Vector2(0, 152)
+collision_mask = 14
+areaFinal = NodePath("../AreaFinal")
+ui = NodePath("../UI")
+
+[node name="Paredes" type="Node" parent="."]
+
+[node name="Pared1" parent="Paredes" instance=ExtResource("3_0kh0y")]
+position = Vector2(0, -333)
+collision_layer = 4
+
+[node name="Pared3" parent="Paredes" instance=ExtResource("3_0kh0y")]
+position = Vector2(586, -92)
+rotation = 1.5708
+collision_layer = 4
+
+[node name="Pared5" parent="Paredes" instance=ExtResource("3_0kh0y")]
+position = Vector2(-587, -92)
+rotation = 1.5708
+collision_layer = 4
+
+[node name="AreaFinal" parent="." instance=ExtResource("4_2ia52")]
+position = Vector2(0, 392)
+
+[node name="UI" parent="." instance=ExtResource("5_crgrh")]
+
+[node name="SpawnerLadrillos" type="Node" parent="." node_paths=PackedStringArray("principioSpawn")]
+script = ExtResource("6_s2ilj")
+escenaLadrillo = ExtResource("7_ktoa8")
+principioSpawn = NodePath("../Marker2D")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(0, -256)

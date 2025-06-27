@@ -1,0 +1,101 @@
+[gd_scene load_steps=10 format=3 uid="uid://dx3jwrbq6yvxl"]
+
+[ext_resource type="Script" path="res://Scripts/BrickBall/brick_ball.gd" id="1_onugq"]
+[ext_resource type="Script" path="res://Scripts/BrickBall/ball_spawner.gd" id="1_xdc4j"]
+[ext_resource type="Script" path="res://Scripts/BrickBall/block_grid.gd" id="2_omtxl"]
+[ext_resource type="PackedScene" uid="uid://cdkuuil8bh6qp" path="res://Escenas/BrickBall/Pared.tscn" id="2_xb8mh"]
+[ext_resource type="PackedScene" uid="uid://bu2bvtme5s4to" path="res://Escenas/BrickBall/Ball.tscn" id="3_ddujd"]
+[ext_resource type="PackedScene" uid="uid://ckpkjrqf6b723" path="res://Escenas/BrickBall/piso.tscn" id="3_pxxom"]
+[ext_resource type="FontFile" uid="uid://cx8t7dylchigh" path="res://Assets/SuperMario256.ttf" id="7_85j6s"]
+[ext_resource type="PackedScene" uid="uid://dfoyjuh88v5t" path="res://Escenas/BrickBall/ui2.tscn" id="8_kfotx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cnya7"]
+size = Vector2(269.5, 9)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_onugq")
+
+[node name="BallSpawner" type="Node2D" parent="."]
+position = Vector2(543, 629)
+script = ExtResource("1_xdc4j")
+ball_scene = ExtResource("3_ddujd")
+
+[node name="paredIzq" parent="." instance=ExtResource("2_xb8mh")]
+
+[node name="paredDer" parent="." instance=ExtResource("2_xb8mh")]
+position = Vector2(263, 0)
+
+[node name="piso" parent="." instance=ExtResource("3_pxxom")]
+
+[node name="techo" parent="." instance=ExtResource("3_pxxom")]
+position = Vector2(1, 641)
+
+[node name="ContenedorLadrillos" type="Node2D" parent="."]
+position = Vector2(575, 325)
+
+[node name="Node2D" type="Node2D" parent="ContenedorLadrillos"]
+position = Vector2(-538, -216)
+
+[node name="BlockGrid" type="Node2D" parent="."]
+position = Vector2(575, 325)
+script = ExtResource("2_omtxl")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 7
+collision_mask = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(543.25, 643.5)
+shape = SubResource("RectangleShape2D_cnya7")
+
+[node name="Pelotas" type="Label" parent="."]
+offset_left = 14.0
+offset_top = 32.0
+offset_right = 109.0
+offset_bottom = 57.0
+theme_override_fonts/font = ExtResource("7_85j6s")
+text = "Pelotas:"
+
+[node name="Score" type="Label" parent="."]
+offset_left = 14.0
+offset_top = 10.0
+offset_right = 83.0
+offset_bottom = 33.0
+theme_override_fonts/font = ExtResource("7_85j6s")
+text = "Score:"
+
+[node name="UI" parent="." instance=ExtResource("8_kfotx")]
+process_mode = 3
+auto_translate_mode = 1
+
+[node name="Reiniciar" type="Button" parent="."]
+offset_left = 14.0
+offset_top = 57.0
+offset_right = 90.0
+offset_bottom = 88.0
+text = "Reiniciar"
+
+[node name="Volver al menu" type="Button" parent="."]
+offset_left = 14.0
+offset_top = 88.0
+offset_right = 138.0
+offset_bottom = 119.0
+text = "Volver al menu"
+
+[node name="Label" type="Label" parent="."]
+offset_left = 14.0
+offset_top = 136.0
+offset_right = 381.0
+offset_bottom = 250.0
+theme_override_fonts/font = ExtResource("7_85j6s")
+text = "AGREGAR_PELOTA: \"+⚽\",
+ELIMINAR_COLUMNA: \"-|\",
+ELIMINAR_FILA: \"-_\",
+BORRAR_TODOS_LADRILLOS: \"💥\",
+	AGREGAR_FILA: \"+_\",
+	ELIMINAR_PELOTAS: \"-⚽\","
+
+[connection signal="area_entered" from="Area2D" to="BallSpawner" method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="Area2D" to="BallSpawner" method="_on_area_2d_body_entered"]
+[connection signal="pressed" from="Reiniciar" to="." method="_on_reiniciar_pressed"]
+[connection signal="pressed" from="Volver al menu" to="." method="_on_volver_al_menu_pressed"]
