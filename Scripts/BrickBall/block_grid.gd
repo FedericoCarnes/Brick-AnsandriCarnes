@@ -4,6 +4,7 @@ extends Node2D
 @onready var container: Node = $"../ContenedorLadrillos"
 @onready var ballSpawner = $"../BallSpawner"
 var exploto = false
+var columnas_extras: int = 0
 var filasTotales = 0
 enum Especialidad {
 	AGREGAR_PELOTA,
@@ -12,6 +13,7 @@ enum Especialidad {
 	BORRAR_TODOS_LADRILLOS,
 	AGREGAR_FILA,
 	ELIMINAR_PELOTAS,
+	AGREGAR_COLUMNA,
 	NINGUNA
 }
 const DESCRIPCIONES_ESPECIALIDADES = {
@@ -21,6 +23,7 @@ const DESCRIPCIONES_ESPECIALIDADES = {
 	Especialidad.BORRAR_TODOS_LADRILLOS: "💥",
 	Especialidad.AGREGAR_FILA: "+_",
 	Especialidad.ELIMINAR_PELOTAS: "-⚽",
+	Especialidad.AGREGAR_COLUMNA: "+||",
 	Especialidad.NINGUNA: null
 }
 const PROBABILIDADES_ESPECIALIDADES = {
@@ -30,6 +33,7 @@ const PROBABILIDADES_ESPECIALIDADES = {
 	Especialidad.BORRAR_TODOS_LADRILLOS: 1,
 	Especialidad.AGREGAR_FILA: 10,
 	Especialidad.ELIMINAR_PELOTAS: 15,
+	Especialidad.AGREGAR_COLUMNA: 20,
 	Especialidad.NINGUNA: 44
 }
 
@@ -77,13 +81,19 @@ func activar_especialidad(especialidad_elegida: int, ladrillo: Brick):
 			if max_eliminar <= 0:
 				return
 			ballSpawner.num_pelotas = randi_range(1, max_eliminar)
+		Especialidad.AGREGAR_COLUMNA:
+			if columnas_extras < 4:
+				agregar_columnas()
+
 
 func _ready():
 	agregar_nueva_fila()
 
 func agregar_nueva_fila():
 	filasTotales += 1
-	var nueva_fila = [-2, -1, 0, 1]
+	var nueva_fila = []
+	for x in range(-2 - columnas_extras, 2 + columnas_extras):
+		nueva_fila.append(x)
 	var ladrillos = 0
 	for x in nueva_fila:
 		if randi_range(0, 1) == 0:
@@ -100,6 +110,32 @@ func agregar_nueva_fila():
 			ladrillo.setValor(nivel_dificultad)
 	if ladrillos == 0:
 		agregar_nueva_fila()
+
+func agregar_columnas():
+	columnas_extras += 1
+	var ancho_adicional = 64  
+	var pared_izquierda = $"../paredIzq"
+	var pared_derecha = $"../paredDer"
+	if pared_izquierda and pared_derecha:
+		pared_izquierda.position.x -= ancho_adicional
+		pared_derecha.position.x += ancho_adicional
+	var piso = $"../piso"
+	var techo = $"../techo"
+	var area =  $"../Area2D"
+	piso.scale.x += ancho_adicional * 2 / 256.0 
+	techo.scale.x = piso.scale.x 
+	area.scale.x = piso.scale.x
+	var piso_shape = piso.get_node("CollisionShape2D")
+	if piso_shape and piso_shape.shape is RectangleShape2D:
+		piso_shape.shape.extents.x += ancho_adicional
+	var techo_shape = techo.get_node("CollisionShape2D")
+	if techo_shape and techo_shape.shape is RectangleShape2D:
+		techo_shape.shape.extents.x += ancho_adicional
+	techo.position.x -= ancho_adicional * 4.18
+	piso.position.x -= ancho_adicional * 4.18
+	area.position.x -= ancho_adicional * 4.18
+
+
 
 func calcular_valor_por_filas(filasTotales_param: int) -> int:
 	if filasTotales_param < 1:

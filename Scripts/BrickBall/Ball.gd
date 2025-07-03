@@ -10,7 +10,6 @@ func _physics_process(_delta):
 	if moversePermitido:
 		var previous_velocity = velocity
 		var col = move_and_slide()
-
 		if col:
 			var processed_colliders = {}
 			for i in range(get_slide_collision_count()):
